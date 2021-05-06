@@ -24,6 +24,7 @@ async function getQuote() {
 
     //'https://thingproxy.freeboard.io/fetch/';
     //'https://cors-anywhere.herokuapp.com/';
+    
 
     const apiUrl = 'http://api.forismatic.com/api/1.0/?method=get&land=en&format=json';
     try {
