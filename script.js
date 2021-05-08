@@ -1,3 +1,5 @@
+var apiQuotes = [];
+var quote;
 const quoteContainer = document.getElementById('quote-container');
 const quoteText = document.getElementById('quote');
 const authorText = document.getElementById('author');
@@ -17,32 +19,27 @@ function removeLoadingSpinner() {
     }
 }
 
+// New quote
+function newQuote () {
+    showLoadingSpinner();
+    quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
+    console.log(quote);
+    authorText.innerHTML = !quote.author ?  "Unknown" : quote.author;
+    quote.text.length > 120 ? quoteText.classList.add('long-quote'):quoteText.classList.remove('long-quote');
+    quoteText.innerHTML = quote.text;
+    removeLoadingSpinner();
+}
+
 // Get Quote from API
 async function getQuote() {
     showLoadingSpinner();
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-
-    //'https://thingproxy.freeboard.io/fetch/';
-    //'https://cors-anywhere.herokuapp.com/';
-    
-
-    const apiUrl = 'http://api.forismatic.com/api/1.0/?method=get&land=en&format=json';
+    const apiUrl = 'https://type.fit/api/quotes';
     try {
-        const response = await fetch(proxyUrl +  apiUrl);
-        const data = await response.json();
-        authorText.innerHTML = data.authorText === '' 
-        ?  "Unknown" 
-        : data.quoteAuthor;
-        data.quoteText.length > 120 
-        ? quoteText.classList.add('long-quote')
-        :quoteText.classList.remove('long-quote');
-        
-        quoteText.innerHTML = data.quoteText;
-        removeLoadingSpinner();
+        const response = await fetch(apiUrl);
+        apiQuotes = await response.json();
+        newQuote();
     } catch (error) {
-        // getQuote(); 
-        removeLoadingSpinner(); //Added as API forismatic doesn't send response
-
+        newQuote();
     }
 }
 
