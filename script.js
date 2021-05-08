@@ -23,7 +23,6 @@ function removeLoadingSpinner() {
 function newQuote () {
     showLoadingSpinner();
     quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
-    console.log(quote);
     authorText.innerHTML = !quote.author ?  "Unknown" : quote.author;
     quote.text.length > 120 ? quoteText.classList.add('long-quote'):quoteText.classList.remove('long-quote');
     quoteText.innerHTML = quote.text;
@@ -51,15 +50,9 @@ function tweetQuote() {
     window.open(twitterUrl, '_blank');
 }
 
-
-// On Load
-getQuote();
-
 //Event Listeners
 newQuoteBtn.addEventListener('click', getQuote);
 twitterBtn.addEventListener('click', tweetQuote);
 
-
-
-
-console.log()
+// On Load initial call
+getQuote();
